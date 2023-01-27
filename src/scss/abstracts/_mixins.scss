@@ -1,0 +1,17 @@
+@mixin flex {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@mixin font-head {
+	letter-spacing: 0.15em;
+	text-shadow: rgb(44, 40, 40) 1px 4px 1px;
+}
+
+
+
+@mixin input-border {
+	padding: 0.5em;
+	border-radius: 0.6rem;
+}

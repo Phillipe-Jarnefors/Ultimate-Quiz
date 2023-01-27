@@ -1,0 +1,24 @@
+{
+  "name": "ultimate-quiz",
+  "version": "1.0.0",
+  "description": "A fun quiz game!",
+  "source": "src/index.html",
+  "scripts": {
+    "dev": "parcel"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Phillipe-Jarnefors/Ultimate-Quiz.git"
+  },
+  "keywords": [],
+  "author": "Phillipe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Phillipe-Jarnefors/Ultimate-Quiz/issues"
+  },
+  "homepage": "https://github.com/Phillipe-Jarnefors/Ultimate-Quiz#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.8.3",
+    "parcel": "^2.8.3"
+  }
+}

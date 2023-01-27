@@ -1,0 +1,98 @@
+
+@use 'abstracts/index' as *;
+
+
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	
+}
+
+header {
+	@include flex;
+	@include font-head;	
+	font-family: $font-head;
+	color: $fourth-color;
+	background: $first-color;
+	height: 12vh;
+}
+
+.wrapper {
+	margin: 0 1em;
+	font-family: $font-main;
+	font-weight: $font-weight;
+}
+
+.main-content {
+	height: 80vh;
+	margin-top: 2rem;
+	border-radius: 0.5rem;
+	border: 2px solid $first-color;
+	background: $third-color;
+	
+	legend {
+		font-size: 2rem;
+		font-weight: bold;
+		margin-left: 1rem;
+		padding: 0 0.5rem;
+	}
+}
+
+.multiselect-categories {
+	width: 100%;
+	padding: 0 1em;
+	p {
+		margin-top: 0.5em;
+		@include flex;
+		font-size: small;
+	}
+
+	.select-category {
+		position: relative;
+
+		.over-select {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
+	}
+
+	.select-category {
+
+		select {
+			width: 100%;
+			@include input-border;
+			margin-top: 1rem;
+			font-weight: $font-weight;
+			border: 1px $first-color solid;
+			font-size: medium;
+			padding: 0.5rem;
+		}
+	}
+
+	.checkbox-category {
+		display: none;
+		border: 2px $first-color solid;
+		border-top: 0;
+		border-radius: 0.2rem;
+		padding-left: 0.8rem;
+
+		label {
+			display: block;
+			margin: 5px 0;
+		}
+	
+		label:hover {
+			background: lightblue;
+		}
+	}
+}
+
+
+.checkbox-category > * {
+	@include flex;
+	justify-content: flex-start;
+}
