@@ -511,6 +511,50 @@ form {
 			cursor: pointer;
 		}
 	}
+  }
 
+  .test-awnser {
+	@include flex;
+	flex-wrap: wrap;
+	
+	#awnser-prompt {
+		@include flex;
+		margin-top: 4rem;
+		width: 100%;
+	}
 
+	button {
+		margin-top: 1rem;
+		background: $first-color;
+		@include standard-button;
+	}
+
+	button:hover {
+		background: $second-color;
+		cursor: pointer;
+		color: black;
+	}
+  }
+
+  //----------------------------- Footer -----------------------------
+  footer {
+	@include flex;
+	position: absolute;
+	background: $third-color;
+	bottom: 0;
+	width: 100%;
+
+	div {
+		button {
+			margin-top: 1rem;
+			background: $first-color;
+			@include standard-button;
+			margin: 1rem;
+		}
+		button:hover {
+			background: $second-color;
+			cursor: pointer;
+			color: black;
+		}
+	}
   }

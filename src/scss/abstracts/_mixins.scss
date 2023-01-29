@@ -20,13 +20,26 @@
 }
 
 @mixin font-head {
-	letter-spacing: 0.15em;
+	letter-spacing: 0.2em;
+	font-size: larger;
 	text-shadow: rgb(44, 40, 40) 1px 4px 1px;
 }
-
-
 
 @mixin input-border {
 	padding: 0.5em;
 	border-radius: 0.6rem;
+}
+
+//Utilites button
+
+@mixin standard-button {
+	padding: 1rem 2rem;
+	margin-bottom: 1rem;
+	font-size: medium;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	border-radius: 0.5rem;
+	border: 2px solid black;
+	color: white;
+	
 }
