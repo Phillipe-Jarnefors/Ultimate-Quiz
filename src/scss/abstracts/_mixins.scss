@@ -1,7 +1,22 @@
+// @use '../abstracts/index';
+
 @mixin flex {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+@mixin main-frame {
+	min-height: 40vh;
+	margin-top: 2rem;
+	border-radius: 0.5rem;
+}
+
+@mixin main-frame-legend {
+	font-size: 2rem;
+	font-weight: bold;
+	margin-left: 1rem;
+	padding: 0 0.5rem;
 }
 
 @mixin font-head {

@@ -25,17 +25,15 @@ header {
 }
 
 .main-content {
-	min-height: 50vh;
-	margin-top: 2rem;
-	border-radius: 0.5rem;
+	/// Display none!
+	display: none;
+
+	@include main-frame;
 	border: 2px solid $first-color;
 	background: $third-color;
 	
 	legend {
-		font-size: 2rem;
-		font-weight: bold;
-		margin-left: 1rem;
-		padding: 0 0.5rem;
+		@include main-frame-legend;
 	}
 }
 
@@ -458,4 +456,61 @@ form {
 	  left: 80%;
 	  width: 40px;
 	}
+  }
+
+  // -------------------------- Question-section -----------------------------
+
+  .quiz-content {
+	@include main-frame;
+	border: 2px solid $first-color;
+	background: $third-color;
+
+	legend {
+		@include main-frame-legend;
+	}
+
+	.quiz-questions {
+		@include main-frame;
+		height: 10rem;
+		background: white;
+		
+		legend {
+			font-size: medium;
+		}
+	}
+  }
+
+
+  .quiz-wrapper-div {
+	margin: 2rem;
+
+	.split-section {
+		margin: 2rem 0;
+		border: 2px solid black;
+	}
+
+	.question-holder {
+		@include flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 2rem;
+
+		div {
+			@include flex;
+			background: $second-color;
+			width: 43%;
+			min-height: 4rem;
+			h4 {
+				padding: 0.5rem;
+			}
+		}
+		div:hover {
+			background: $first-color;
+			color: white;
+			font-size: large;
+			cursor: pointer;
+		}
+	}
+
+
   }
