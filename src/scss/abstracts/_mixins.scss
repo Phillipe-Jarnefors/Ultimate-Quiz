@@ -25,6 +25,8 @@
 	text-shadow: rgb(44, 40, 40) 1px 4px 1px;
 }
 
+
+
 @mixin input-border {
 	padding: 0.5em;
 	border-radius: 0.6rem;
@@ -33,7 +35,7 @@
 //Utilites button
 
 @mixin standard-button {
-	padding: 1rem 2rem;
+	padding: 0.5rem 2rem;
 	margin-bottom: 1rem;
 	font-size: medium;
 	font-weight: 600;

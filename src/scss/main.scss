@@ -9,7 +9,7 @@
 }
 
 // body {
-// 	//position: relative;
+// 	position: relative;
 // }
 
 header {
@@ -22,29 +22,40 @@ header {
 }
 
 .wrapper {
-	margin: 0 1em;
+	min-width: 300px;
+	min-height: 100%;
+	margin: 0 1em 5em 1em;
+	
 	font-family: $font-main;
 	font-weight: $font-weight;
+	section {
+		min-width: 300px;
+	}
 }
 
-@media screen and (min-width: 600px){
+@media screen and (min-width: 650px){
 
 	header {
 		justify-content: flex-start;
 		padding-left: 2rem;
+		height: 2.5rem;
+		font-size: small;
 	}
 	.wrapper {
 		@include flex;
 		
 		section {
-			width: 550px;
+			width: 450px;
 		}
+	}
+	.quiz-questions {
+		width: 450px;
 	}
 }
 
 .main-content {
 	//Display none for dev.
-	//display: none;
+	display: none;
 	@include main-frame;
 	border: 2px solid $first-color;
 	background: $third-color;
@@ -124,7 +135,7 @@ header {
 	
 	div {
 		flex: 1;
-		padding: 0.5rem;
+		padding: 0.6rem;
 
 		input {
 			display: none;
@@ -492,7 +503,7 @@ form {
 
 	.quiz-questions {
 		@include main-frame;
-		height: 10rem;
+		min-height: 9rem;
 		background: white;
 		
 		legend {
@@ -503,7 +514,7 @@ form {
 
 
   .quiz-wrapper-div {
-	margin: 2rem;
+	margin: 1rem;
 
 	.split-section {
 		margin: 2rem 0;
@@ -560,20 +571,20 @@ form {
   //----------------------------- Footer -----------------------------
   footer {
 	@include flex;
-	position: absolute;
+	position: fixed;
 	background: $third-color;
 	bottom: 0;
+	
 	min-width: 300px;
 	width: 100%;
 
-	div {
+	.score-newquiz-buttons {
 		//display none
-		display: none;
+		//display: none;
 		button {
-			margin-top: 1rem;
 			background: $first-color;
 			@include standard-button;
-			margin: 1rem;
+			margin: 0.5rem 1rem;
 		}
 		button:hover {
 			background: $second-color;
