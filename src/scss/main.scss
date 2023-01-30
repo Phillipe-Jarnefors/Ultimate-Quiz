@@ -55,7 +55,7 @@ header {
 
 .main-content {
 	//Display none for dev.
-	display: none;
+	//display: none;
 	@include main-frame;
 	border: 2px solid $first-color;
 	background: $third-color;
