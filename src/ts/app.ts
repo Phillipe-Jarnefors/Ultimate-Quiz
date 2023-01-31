@@ -2,11 +2,14 @@ const categorySelect = document.querySelector('.select-category') as HTMLDivElem
 const categoryCheckbox = document.querySelector('.checkbox-category') as HTMLDivElement
 //const formCategory = document.querySelector('.form-category') as HTMLFormElement
 
+
 let expandDropdownCategory: boolean = false;
 let quizUrl = 'https://the-trivia-api.com/api/categories'
 let categoryUrl = 'https://the-trivia-api.com/api/questions?categories='
-let keyArray: string[];
-let result: string[];
+let valueArray: string[] = []
+
+
+
 
 let quizApp = {
 	showCheckboxes() {
@@ -18,51 +21,61 @@ let quizApp = {
 			expandDropdownCategory = false;
 		}
 	},
+	printCategories(data: { [key:string]: string[] }) {
+		let checkboxValues: string[] = Object.values(data).map((values) => values[0])
+		
+		categoryCheckbox.innerHTML = Object.keys(data)
+		.map(key => `
+			<label for="${key}">
+			<input type="checkbox" class="category-value" value=""/>${key}
+			</label>
+		`).join('');
+		
+		this.testCheckCategories(checkboxValues)
+		
+	},
+	testCheckCategories(checkboxValues: string[]) {
+		const categoryCheckboxValue = document.querySelectorAll('.category-value') as NodeListOf<HTMLInputElement>
+	
+		categoryCheckboxValue.forEach((checkbox, index) => {
+			checkboxValues.forEach((box, i) => {
+				categoryCheckboxValue[i].value = `${box}`
+			})
 
+			checkbox.addEventListener('change', e => {
+				if(checkbox.checked) {
+					if (!valueArray.includes(checkboxValues[index])) {
+						valueArray.push(checkboxValues[index])
+						categoryUrl = 'https://the-trivia-api.com/api/questions?categories='
+					}	
+				} else {
+					valueArray = valueArray.filter(match => 
+						match !== checkboxValues[index])
+						categoryUrl = 'https://the-trivia-api.com/api/questions?categories='
+				}
+				let addValueToArray = valueArray.join(',')
+				categoryUrl += addValueToArray
+
+				//CLG for dev
+				console.log(categoryUrl)
+				console.log(valueArray)			
+			})
+		})
+	},
 }
+
 
 
 
 async function getCategoriesDropdown(categories: string) {
 	const response = await fetch(categories);
-	const data = await response.json()
-
-	categoryCheckbox.innerHTML = Object.keys(data)
-	.map(key => `
-		<label for="${key}">
-		<input type="checkbox" name="category-value" value="${key}" class="category-checkbox-value"/>${key}</label>
-	`).join('');
-
-
-	/// LATEST
-	console.log(data);
+	const data: { [key:string]: string[] } = await response.json()
 	
-	Object.values(data).forEach((val: string) => {
-
-		console.log(val[0]);
-	})
-	
-
-	const categoryCheckboxValue = document.querySelectorAll('input[name="category-value"]') as NodeListOf<HTMLInputElement>
-	categoryCheckbox.addEventListener('click', getValueFromCheckbox)
-
-	function getValueFromCheckbox() {
-		//result = []
-		categoryCheckboxValue.forEach(item => {
-			if (item.checked) {
-				// let theData = item.value
-				// result.push(theData)
-				// categoryUrl += theData
-				// console.log(categoryUrl)
-			} 
-		})
-	}
-	
+	quizApp.printCategories(data)
 }
 
 
-
-
+// Hide / Show categories
 categorySelect.addEventListener('click', (event) => {
 	quizApp.showCheckboxes()
 })
