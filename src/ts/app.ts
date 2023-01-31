@@ -1,14 +1,12 @@
 const categorySelect = document.querySelector('.select-category') as HTMLDivElement
 const categoryCheckbox = document.querySelector('.checkbox-category') as HTMLDivElement
-//const formCategory = document.querySelector('.form-category') as HTMLFormElement
-
+const difficultyButtons = document.querySelectorAll('.difficulty-button') as NodeListOf<HTMLInputElement>
 
 let expandDropdownCategory: boolean = false;
 let quizUrl = 'https://the-trivia-api.com/api/categories'
 let categoryUrl = 'https://the-trivia-api.com/api/questions?categories='
 let valueArray: string[] = []
-
-
+let diffUrl: string = ""
 
 
 let quizApp = {
@@ -58,10 +56,30 @@ let quizApp = {
 
 				//CLG for dev
 				console.log(categoryUrl)
-				console.log(valueArray)			
+				console.log(valueArray)		
+				
+
+				this.selectDifficulty()
 			})
 		})
 	},
+	selectDifficulty() {
+		//difficultyButtons[0].checked = true;
+		for(const difficultyRadioButton of difficultyButtons) {
+			difficultyRadioButton.addEventListener('change', this.selectedDifficult)
+		}
+	},
+	selectedDifficult(e: Event) {
+		const target = e.target as HTMLInputElement;
+		
+		if (target.checked) {	
+			diffUrl = categoryUrl + '&difficulty=' + target.value
+			console.log(diffUrl)	
+			
+		} 
+
+	},
+	
 }
 
 
@@ -80,6 +98,8 @@ categorySelect.addEventListener('click', (event) => {
 	quizApp.showCheckboxes()
 })
 
+
+quizApp.selectDifficulty()
 getCategoriesDropdown(quizUrl)
 
 
