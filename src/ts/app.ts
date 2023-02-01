@@ -3,7 +3,13 @@ const categoryCheckbox = document.querySelector('.checkbox-category') as HTMLDiv
 const difficultyButtons = document.querySelectorAll('.difficulty-button') as NodeListOf<HTMLInputElement>
 const numOfQuestionsBtns = document.querySelectorAll('.number-of-questions') as NodeListOf<HTMLInputElement>
 const startQuizBtn = document.querySelector('#start-quiz-btn') as HTMLElement
+let tagsBoxDiv = document.querySelector('.tags-box') as HTMLDivElement;
+let tagsInputField = (document.getElementById('tags-input') as HTMLInputElement)
 
+//Tags
+//const outputTagDiv = `<div class="output"></div>`
+//tagsBoxDiv.innerHTML += outputTagDiv
+//const outputTag = document.querySelector('.output') as HTMLDivElement
 
 let expandDropdownCategory: boolean = false;
 let quizUrl = 'https://the-trivia-api.com/api/categories'
@@ -13,6 +19,9 @@ let categoryUrl: string = ""
 let valueArray: string[] = []
 let diffUrl: string = ""
 let questionsQuantityUrl: string = ""
+let tagsUrl: string = ""
+let tagsArray: string[] = []
+let stringOfArray: string = ""
 
 
 let quizApp = {
@@ -63,9 +72,6 @@ let quizApp = {
 				//CLG for dev
 				console.log(categoryUrl)
 				console.log(valueArray)		
-				
-
-				//this.selectDifficulty()
 			})
 		})
 	},
@@ -79,11 +85,8 @@ let quizApp = {
 		const target = e.target as HTMLInputElement;
 		
 		if (target.checked) {	
-			//diffUrl = categoryUrl + '&difficulty=' + target.value
-
 			diffUrl = '&difficulty=' + target.value
 			console.log(diffUrl)	
-			//this.numOfQuestions(diffUrl)
 		} 
 	},
 	numOfQuestions() {
@@ -91,28 +94,34 @@ let quizApp = {
 			questions.addEventListener('change', (e) => {
 				const target = e.target as HTMLInputElement;
 				if (target.checked) {
-					// questionsQuantityUrl = categoryUrl + target.value + diffUrl;
-
 					questionsQuantityUrl = '&limit=' + target.value
-					console.log(questionsQuantityUrl)
-					
-				}
+					console.log(questionsQuantityUrl)			}
 			})
 		}
 	},
-	
+	tagsHandler() {		
+		const inputValueTag = tagsInputField.value
+		const outputElement = `<div class="tags-div"><h1 class="tags">${inputValueTag}</h1></div>`
+		tagsBoxDiv.innerHTML += outputElement
+		const tagsDiv = document.getElementsByClassName('tags-div')
+		for (const div of tagsDiv) {
+			const p = div.getElementsByClassName('tags')[0]
+			p.addEventListener('click', () => {
+				div.remove()
+			})
+		}
+		//Handle data from tags-input
+		tagsArray.push(inputValueTag) 
+		stringOfArray = tagsArray.toString()
+		tagsUrl = '&tags=' + stringOfArray
+		console.log(tagsArray); 
+		tagsInputField.value = ""		
+	},	
 	storeUrl() {
-		
-		requestUrl += categoryUrl + diffUrl + questionsQuantityUrl;
-
+		requestUrl += categoryUrl + questionsQuantityUrl + diffUrl  + tagsUrl;
 		console.log(requestUrl);
-		
 	},
-
-
 }
-
-
 
 
 async function getCategoriesDropdown(categories: string) {
@@ -126,18 +135,18 @@ startQuizBtn.addEventListener('click', (start) => {
 	quizApp.storeUrl()
 })
 
-
+tagsInputField.addEventListener('keypress', (e) => {
+	if(e.key === 'Enter') {
+		quizApp.tagsHandler()
+	}
+})
 
 // Hide / Show categories
 categorySelect.addEventListener('click', (event) => {
 	quizApp.showCheckboxes()
 })
 
-
 quizApp.selectDifficulty()
 quizApp.numOfQuestions()
 quizApp.selectDifficulty()
 getCategoriesDropdown(quizUrl)
-
-
-
