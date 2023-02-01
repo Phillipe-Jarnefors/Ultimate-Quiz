@@ -67,13 +67,13 @@
 					<form action="/p/quote.php" method="GET">
 						<h3 id="form-title">Number of Questions:</h3>
 						<div id="debt-amount-slider">
-							<input type="radio" name="debt-amount" id="1" value="2" required checked>
+							<input type="radio" name="debt-amount" id="1" class="number-of-questions" value="2" required>
 							<label for="1" data-debt-amount="2"></label>
-							<input type="radio" name="debt-amount" id="2" value="4" required>
+							<input type="radio" name="debt-amount" id="2" class="number-of-questions" value="4" required>
 							<label for="2" data-debt-amount="4"></label>
-							<input type="radio" name="debt-amount" id="3" value="6" required>
+							<input type="radio" name="debt-amount" id="3" class="number-of-questions" value="6" required>
 							<label for="3" data-debt-amount="6"></label>
-							<input type="radio" name="debt-amount" id="4" value="8" required>
+							<input type="radio" name="debt-amount" id="4" class="number-of-questions" value="8" required>
 							<label for="4" data-debt-amount="8"></label>
 							<div id="debt-amount-pos"></div>
 						</div>
@@ -91,7 +91,7 @@
 
 				<section class="start-quiz">
 					<a href="#" style="--color: rgb(0, 237, 100)">
-						<span>Let's go!</span>
+						<span  id="start-quiz-btn" >Let's go!</span>
 						<i></i>
 					</a>
 				</section>

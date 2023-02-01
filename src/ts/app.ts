@@ -1,12 +1,18 @@
 const categorySelect = document.querySelector('.select-category') as HTMLDivElement
 const categoryCheckbox = document.querySelector('.checkbox-category') as HTMLDivElement
 const difficultyButtons = document.querySelectorAll('.difficulty-button') as NodeListOf<HTMLInputElement>
+const numOfQuestionsBtns = document.querySelectorAll('.number-of-questions') as NodeListOf<HTMLInputElement>
+const startQuizBtn = document.querySelector('#start-quiz-btn') as HTMLElement
+
 
 let expandDropdownCategory: boolean = false;
 let quizUrl = 'https://the-trivia-api.com/api/categories'
-let categoryUrl = 'https://the-trivia-api.com/api/questions?categories='
+
+let requestUrl = 'https://the-trivia-api.com/api/questions?categories='
+let categoryUrl: string = ""
 let valueArray: string[] = []
 let diffUrl: string = ""
+let questionsQuantityUrl: string = ""
 
 
 let quizApp = {
@@ -44,12 +50,12 @@ let quizApp = {
 				if(checkbox.checked) {
 					if (!valueArray.includes(checkboxValues[index])) {
 						valueArray.push(checkboxValues[index])
-						categoryUrl = 'https://the-trivia-api.com/api/questions?categories='
+						categoryUrl = ''
 					}	
 				} else {
 					valueArray = valueArray.filter(match => 
 						match !== checkboxValues[index])
-						categoryUrl = 'https://the-trivia-api.com/api/questions?categories='
+						categoryUrl = ''
 				}
 				let addValueToArray = valueArray.join(',')
 				categoryUrl += addValueToArray
@@ -59,7 +65,7 @@ let quizApp = {
 				console.log(valueArray)		
 				
 
-				this.selectDifficulty()
+				//this.selectDifficulty()
 			})
 		})
 	},
@@ -73,13 +79,37 @@ let quizApp = {
 		const target = e.target as HTMLInputElement;
 		
 		if (target.checked) {	
-			diffUrl = categoryUrl + '&difficulty=' + target.value
-			console.log(diffUrl)	
-			
-		} 
+			//diffUrl = categoryUrl + '&difficulty=' + target.value
 
+			diffUrl = '&difficulty=' + target.value
+			console.log(diffUrl)	
+			//this.numOfQuestions(diffUrl)
+		} 
+	},
+	numOfQuestions() {
+		for (const questions of numOfQuestionsBtns) {
+			questions.addEventListener('change', (e) => {
+				const target = e.target as HTMLInputElement;
+				if (target.checked) {
+					// questionsQuantityUrl = categoryUrl + target.value + diffUrl;
+
+					questionsQuantityUrl = '&limit=' + target.value
+					console.log(questionsQuantityUrl)
+					
+				}
+			})
+		}
 	},
 	
+	storeUrl() {
+		
+		requestUrl += categoryUrl + diffUrl + questionsQuantityUrl;
+
+		console.log(requestUrl);
+		
+	},
+
+
 }
 
 
@@ -92,6 +122,11 @@ async function getCategoriesDropdown(categories: string) {
 	quizApp.printCategories(data)
 }
 
+startQuizBtn.addEventListener('click', (start) => {
+	quizApp.storeUrl()
+})
+
+
 
 // Hide / Show categories
 categorySelect.addEventListener('click', (event) => {
@@ -99,6 +134,8 @@ categorySelect.addEventListener('click', (event) => {
 })
 
 
+quizApp.selectDifficulty()
+quizApp.numOfQuestions()
 quizApp.selectDifficulty()
 getCategoriesDropdown(quizUrl)
 
