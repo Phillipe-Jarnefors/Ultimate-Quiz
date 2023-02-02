@@ -506,6 +506,7 @@ form {
 		min-height: 9rem;
 		background: white;
 		
+		
 		legend {
 			font-size: medium;
 		}
@@ -515,6 +516,10 @@ form {
 
   .quiz-wrapper-div {
 	margin: 1rem;
+
+	.the-question {
+		margin-top: 3rem;
+	}
 
 	.split-section {
 		margin: 2rem 0;
@@ -526,8 +531,10 @@ form {
 		justify-content: space-between;
 		flex-wrap: wrap;
 		gap: 2rem;
+		list-style-type: none;
+		padding: 0;
 
-		div {
+		li {
 			@include flex;
 			background: $second-color;
 			width: 43%;
@@ -536,11 +543,19 @@ form {
 				padding: 0.5rem;
 			}
 		}
-		div:hover {
+		li:hover {
 			background: $first-color;
 			color: white;
 			font-size: large;
 			cursor: pointer;
+		}
+		li:active {
+			transform: scale(0.96);
+		}
+		.selected {
+			background-color: $first-color!important;
+			color: white!important;
+			font-size: large!important;
 		}
 	}
   }
@@ -551,6 +566,7 @@ form {
 	
 	#awnser-prompt {
 		@include flex;
+		text-align: center;
 		margin-top: 4rem;
 		width: 100%;
 	}

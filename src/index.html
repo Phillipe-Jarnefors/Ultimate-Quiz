@@ -17,7 +17,7 @@
 	<div class="wrapper">
 		<section>
 			<fieldset class="main-content">
-				<legend>Quiz</legend>
+				<legend>QUIZ</legend>
 
 				<section class="multiselect-categories input-frame">
 					<div class="select-category">
@@ -101,31 +101,28 @@
 
 			<main>
 				<fieldset class="quiz-content">
-					<legend>Question 1 of 4</legend>
+					<legend>
+						<span id="difficulty-span">Medium</span>
+						<span id="correct-score"></span>
+						<span> of </span> 
+						<span id="total-question"></span>
+					</legend>
 					<fieldset class="quiz-questions">
-						<legend>Film & TV</legend>
+						<legend><h2 class="the-question-category">Film & TV</h2></legend>
 						<div class="quiz-wrapper-div">
-							<p>What is the name of the evil sea witch in The Little Mermaid?</p>
+							<h3 class="the-question">What is the name of the evil sea witch in The Little Mermaid?</h3>
 							<div class="split-section"></div>
-							<div class="question-holder">
-								<div>
-									<h4>The Evil Queen</h4>
-								</div>
-								<div>
-									<h4>Maleficent</h4>
-								</div>
-								<div>
-									<h4>Jafar</h4>
-								</div>
-								<div>
-									<h4>Ursula</h4>
-								</div>
-							</div>
+							<ul class="question-holder">
+								<li>The Evil Queen</li>																	
+								<li>Maleficent</li>							
+								<li>Jafar</li>
+								<li>Ursula</li>
+							</ul>
 						</div>
 					</fieldset>
 					<div class="test-awnser">
-						<p id="awnser-prompt">Correct Awnser!</p>
-						<button>Continue</button>
+						<div id="awnser-prompt"></div>
+						<button id="check-answer">Check Answer</button>
 					</div>
 				</fieldset>
 			</main>

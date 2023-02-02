@@ -3,13 +3,24 @@ const categoryCheckbox = document.querySelector('.checkbox-category') as HTMLDiv
 const difficultyButtons = document.querySelectorAll('.difficulty-button') as NodeListOf<HTMLInputElement>
 const numOfQuestionsBtns = document.querySelectorAll('.number-of-questions') as NodeListOf<HTMLInputElement>
 const startQuizBtn = document.querySelector('#start-quiz-btn') as HTMLElement
-let tagsBoxDiv = document.querySelector('.tags-box') as HTMLDivElement;
-let tagsInputField = (document.getElementById('tags-input') as HTMLInputElement)
+const mainContentStart = document.querySelector('.main-content') as HTMLElement
+const tagsBoxDiv = document.querySelector('.tags-box') as HTMLDivElement;
+const tagsInputField = (document.getElementById('tags-input') as HTMLInputElement)
 
-//Tags
-//const outputTagDiv = `<div class="output"></div>`
-//tagsBoxDiv.innerHTML += outputTagDiv
-//const outputTag = document.querySelector('.output') as HTMLDivElement
+//Next section of Quiz
+const theQuestion = document.querySelector('.the-question') as HTMLHeadingElement
+const theQuestionCategory = document.querySelector('.the-question-category') as HTMLElement
+const questionUnorderlist = document.querySelector('.question-holder') as HTMLUListElement
+const quizContent = document.querySelector('.quiz-content') as HTMLElement;
+const correctScoreSpan = document.querySelector('#correct-score') as HTMLSpanElement
+const totalQuestion = document.querySelector('#total-question') as HTMLSpanElement
+const difficultySpan = document.querySelector('#difficulty-span') as HTMLSpanElement;
+const checkBtn = document.querySelector('#check-answer') as HTMLButtonElement;
+const awnserPrompt = document.querySelector('#awnser-prompt') as HTMLParagraphElement
+//const playAgainBtn = document.querySelector('#difficulty-span') as HTMLSpanElement;
+
+
+quizContent.style.display = 'none'
 
 let expandDropdownCategory: boolean = false;
 let quizUrl = 'https://the-trivia-api.com/api/categories'
@@ -22,7 +33,21 @@ let questionsQuantityUrl: string = ""
 let tagsUrl: string = ""
 let tagsArray: string[] = []
 let stringOfArray: string = ""
+//let numberOfQuestions: string;
 
+let correctAnswer: 
+{ 	
+	answer: string, 
+	correctScore: number, 
+	askedCount: number, 
+	totalQuestion: number 
+} 
+= {
+	answer: "",
+	correctScore: 0,
+	askedCount: 0,
+	totalQuestion: 0
+}
 
 let quizApp = {
 	showCheckboxes() {
@@ -86,6 +111,7 @@ let quizApp = {
 		
 		if (target.checked) {	
 			diffUrl = '&difficulty=' + target.value
+			difficultySpan.innerHTML = target.value.toUpperCase()
 			console.log(diffUrl)	
 		} 
 	},
@@ -95,7 +121,9 @@ let quizApp = {
 				const target = e.target as HTMLInputElement;
 				if (target.checked) {
 					questionsQuantityUrl = '&limit=' + target.value
-					console.log(questionsQuantityUrl)			}
+					console.log(questionsQuantityUrl)	
+					correctAnswer.totalQuestion = + target.value
+				}
 			})
 		}
 	},
@@ -118,19 +146,94 @@ let quizApp = {
 		tagsInputField.value = ""		
 	},	
 	storeUrl() {
+		//mainContentStart.style.display = 'none'
 		requestUrl += categoryUrl + questionsQuantityUrl + diffUrl  + tagsUrl;
 		console.log(requestUrl);
+		requestCallApi(requestUrl)
 	},
+	// Second part of the Quiz
+	showQuestion(data: any) {
+		checkBtn.disabled = false;
+		mainContentStart.style.display = "none"
+		quizContent.style.display = "block"
+
+		correctAnswer.answer = data.correctAnswer
+		let incorrectAnswers = data.incorrectAnswers
+		let optionsList = incorrectAnswers
+		optionsList.splice(Math.floor(Math.random() * (incorrectAnswers.length + 1)), 0, correctAnswer.answer)
+
+		theQuestionCategory.innerHTML = `${data.category}`
+		theQuestion.innerHTML = `${data.question}`
+		questionUnorderlist.innerHTML = `
+			${optionsList.map((option: string) => `
+				<li><span>${option}<span></li>
+			`).join('')}
+		`;
+		this.selectOption()
+	},
+	selectOption() {
+		questionUnorderlist.querySelectorAll('li').forEach((option) => {
+			option.addEventListener('click', () => {
+				if(questionUnorderlist.querySelector('.selected')) {
+					const activeOption = questionUnorderlist.querySelector('.selected')
+					activeOption?.classList.remove('selected')
+				}
+				option.classList.add('selected')
+			})
+		})
+	},
+	checkAnswer() {
+		checkBtn.disabled = true
+		if(questionUnorderlist.querySelector('.selected')) {
+			let selectedAnswer = questionUnorderlist.querySelector('.selected')?.textContent
+			console.log(selectedAnswer)
+			console.log(correctAnswer)
+			if(selectedAnswer == correctAnswer.answer) {
+				correctAnswer.correctScore++
+				awnserPrompt.innerHTML = 'Correct Answer!'
+			} else {
+				awnserPrompt.innerHTML = `Incorrect Answer! <br><br>Correct Answer:  ${correctAnswer.answer}`
+			}
+			this.checkCount()
+		}
+	},
+	checkCount() {
+		correctAnswer.askedCount++
+		this.setCount();
+		if(correctAnswer.askedCount === correctAnswer.totalQuestion) {
+			questionUnorderlist.innerHTML = `Your score: ${correctAnswer.correctScore} of ${correctAnswer.totalQuestion}`
+		} else {
+			setTimeout(() => {
+				requestCallApi(requestUrl)
+			}, 1800)
+		}
+	},
+	setCount() {
+		totalQuestion.innerHTML = correctAnswer.totalQuestion.toString()
+		correctScoreSpan.innerHTML = correctAnswer.correctScore.toString()
+	}
 }
 
 
+// totalQuestion
+// correctScoreSpan
+
+// Async functions
 async function getCategoriesDropdown(categories: string) {
 	const response = await fetch(categories);
 	const data: { [key:string]: string[] } = await response.json()
-	
 	quizApp.printCategories(data)
 }
 
+async function requestCallApi(requestUrl: string) {
+	const response = await fetch(requestUrl)
+	const data = await response.json()
+	
+	awnserPrompt.innerHTML = ""
+	quizApp.showQuestion(data[0])
+}
+
+// AddEventListernes
 startQuizBtn.addEventListener('click', (start) => {
 	quizApp.storeUrl()
 })
@@ -139,6 +242,10 @@ tagsInputField.addEventListener('keypress', (e) => {
 	if(e.key === 'Enter') {
 		quizApp.tagsHandler()
 	}
+})
+
+checkBtn.addEventListener('click', () => {
+	quizApp.checkAnswer()
 })
 
 // Hide / Show categories
