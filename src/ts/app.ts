@@ -2,7 +2,7 @@ const categorySelect = document.querySelector('.select-category') as HTMLDivElem
 const categoryCheckbox = document.querySelector('.checkbox-category') as HTMLDivElement
 const difficultyButtons = document.querySelectorAll('.difficulty-button') as NodeListOf<HTMLInputElement>
 const numOfQuestionsBtns = document.querySelectorAll('.number-of-questions') as NodeListOf<HTMLInputElement>
-const startQuizBtn = document.querySelector('#start-quiz-btn') as HTMLElement
+const startQuizBtn = document.querySelector('#start-quiz-btn') as HTMLButtonElement
 const mainContentStart = document.querySelector('.main-content') as HTMLElement
 const tagsBoxDiv = document.querySelector('.tags-box') as HTMLDivElement;
 const tagsInputField = (document.getElementById('tags-input') as HTMLInputElement)
@@ -24,13 +24,13 @@ quizContent.style.display = 'none'
 
 let expandDropdownCategory: boolean = false;
 let quizUrl = 'https://the-trivia-api.com/api/categories'
-
+let tagsUrl = 'https://the-trivia-api.com/api/tags'
 let requestUrl = 'https://the-trivia-api.com/api/questions?categories='
 let categoryUrl: string = ""
 let valueArray: string[] = []
 let diffUrl: string = ""
 let questionsQuantityUrl: string = ""
-let tagsUrl: string = ""
+let tagsString: string = ""
 let tagsArray: string[] = []
 let stringOfArray: string = ""
 //let numberOfQuestions: string;
@@ -58,6 +58,15 @@ let quizApp = {
 			categoryCheckbox.style.display = 'none';
 			expandDropdownCategory = false;
 		}
+	},
+	setupContent() {
+     	difficultyButtons[0].checked = true;
+		diffUrl = '&difficulty=easy'
+		difficultySpan.innerHTML = 'EASY'
+		
+		numOfQuestionsBtns[0].checked = true;
+		questionsQuantityUrl = '&limit=2'
+		correctAnswer.totalQuestion = 2
 	},
 	printCategories(data: { [key:string]: string[] }) {
 		let checkboxValues: string[] = Object.values(data).map((values) => values[0])
@@ -101,7 +110,6 @@ let quizApp = {
 		})
 	},
 	selectDifficulty() {
-		//difficultyButtons[0].checked = true;
 		for(const difficultyRadioButton of difficultyButtons) {
 			difficultyRadioButton.addEventListener('change', this.selectedDifficult)
 		}
@@ -127,7 +135,7 @@ let quizApp = {
 			})
 		}
 	},
-	tagsHandler() {		
+	tagsHandler(data: any) {		
 		const inputValueTag = tagsInputField.value
 		const outputElement = `<div class="tags-div"><h1 class="tags">${inputValueTag}</h1></div>`
 		tagsBoxDiv.innerHTML += outputElement
@@ -139,15 +147,17 @@ let quizApp = {
 			})
 		}
 		//Handle data from tags-input
-		tagsArray.push(inputValueTag) 
-		stringOfArray = tagsArray.toString()
-		tagsUrl = '&tags=' + stringOfArray
-		console.log(tagsArray); 
-		tagsInputField.value = ""		
+		if (data[0]) {
+			tagsArray.push(inputValueTag) 
+			stringOfArray = tagsArray.toString()
+			tagsString = '&tags=' + stringOfArray
+			console.log(tagsArray); 
+			tagsInputField.value = ""		
+		}
 	},	
 	storeUrl() {
 		//mainContentStart.style.display = 'none'
-		requestUrl += categoryUrl + questionsQuantityUrl + diffUrl  + tagsUrl;
+		requestUrl += categoryUrl + questionsQuantityUrl + diffUrl  + tagsString;
 		console.log(requestUrl);
 		requestCallApi(requestUrl)
 	},
@@ -195,6 +205,9 @@ let quizApp = {
 				awnserPrompt.innerHTML = `Incorrect Answer! <br><br>Correct Answer:  ${correctAnswer.answer}`
 			}
 			this.checkCount()
+		} else {
+			awnserPrompt.innerHTML = `Please select a option.`
+			checkBtn.disabled = false;
 		}
 	},
 	checkCount() {
@@ -205,7 +218,7 @@ let quizApp = {
 		} else {
 			setTimeout(() => {
 				requestCallApi(requestUrl)
-			}, 1800)
+			}, 2500)
 		}
 	},
 	setCount() {
@@ -229,8 +242,21 @@ async function requestCallApi(requestUrl: string) {
 	const response = await fetch(requestUrl)
 	const data = await response.json()
 	
+	quizApp.setCount()
 	awnserPrompt.innerHTML = ""
 	quizApp.showQuestion(data[0])
+}
+
+async function tagsInputs(tagsUrl: string) {
+	const response = await fetch(tagsUrl)
+	const data = await response.json()
+
+	tagsInputField.addEventListener('keypress', (e) => {
+		if(e.key === 'Enter') {
+			quizApp.tagsHandler(data)
+		}
+	})
+
 }
 
 // AddEventListernes
@@ -238,11 +264,7 @@ startQuizBtn.addEventListener('click', (start) => {
 	quizApp.storeUrl()
 })
 
-tagsInputField.addEventListener('keypress', (e) => {
-	if(e.key === 'Enter') {
-		quizApp.tagsHandler()
-	}
-})
+
 
 checkBtn.addEventListener('click', () => {
 	quizApp.checkAnswer()
@@ -253,7 +275,9 @@ categorySelect.addEventListener('click', (event) => {
 	quizApp.showCheckboxes()
 })
 
+
+quizApp.setupContent()
 quizApp.selectDifficulty()
 quizApp.numOfQuestions()
-quizApp.selectDifficulty()
+tagsInputs(tagsUrl)
 getCategoriesDropdown(quizUrl)
