@@ -6,6 +6,7 @@ const startQuizBtn = document.querySelector('#start-quiz-btn') as HTMLButtonElem
 const mainContentStart = document.querySelector('.main-content') as HTMLElement
 const tagsBoxDiv = document.querySelector('.tags-box') as HTMLDivElement;
 const tagsInputField = (document.getElementById('tags-input') as HTMLInputElement)
+const paragraphError = document.getElementById('paragraph-error') as HTMLParagraphElement
 
 //Next section of Quiz
 const theQuestion = document.querySelector('.the-question') as HTMLHeadingElement
@@ -138,22 +139,32 @@ let quizApp = {
 	tagsHandler(data: any) {		
 		const inputValueTag = tagsInputField.value
 		const outputElement = `<div class="tags-div"><h1 class="tags">${inputValueTag}</h1></div>`
-		tagsBoxDiv.innerHTML += outputElement
-		const tagsDiv = document.getElementsByClassName('tags-div')
-		for (const div of tagsDiv) {
-			const p = div.getElementsByClassName('tags')[0]
-			p.addEventListener('click', () => {
-				div.remove()
-			})
-		}
-		//Handle data from tags-input
-		if (data[0]) {
-			tagsArray.push(inputValueTag) 
+
+		const foundTag = data.find((tag:any) => tag === tagsInputField.value);
+
+        if (foundTag) {
+			paragraphError.innerHTML = ""
+			tagsBoxDiv.innerHTML += outputElement;
+			tagsArray.push(tagsInputField.value);
+			tagsInputField.value = "";
+			const tagsDiv = document.getElementsByClassName('tags-div')
+
 			stringOfArray = tagsArray.toString()
 			tagsString = '&tags=' + stringOfArray
-			console.log(tagsArray); 
-			tagsInputField.value = ""		
-		}
+
+			for (const div of tagsDiv) {
+				const p = div.getElementsByClassName('tags')[0]
+				p.addEventListener('click', () => {
+					div.remove()
+				})
+		  	}
+        } else {
+			paragraphError.style.fontSize = "1rem"
+			paragraphError.style.color = "red"
+			
+			paragraphError.innerHTML = "Tag not found, please try another!"
+        	
+        }	
 	},	
 	storeUrl() {
 		//mainContentStart.style.display = 'none'
@@ -247,24 +258,26 @@ async function requestCallApi(requestUrl: string) {
 	quizApp.showQuestion(data[0])
 }
 
-async function tagsInputs(tagsUrl: string) {
-	const response = await fetch(tagsUrl)
-	const data = await response.json()
-
-	tagsInputField.addEventListener('keypress', (e) => {
-		if(e.key === 'Enter') {
-			quizApp.tagsHandler(data)
-		}
-	})
-
-}
+// async function tagsInputs(tagsUrl: string) {
+// 	const response = await fetch(tagsUrl)
+// 	const data = await response.json()
+// }
 
 // AddEventListernes
 startQuizBtn.addEventListener('click', (start) => {
 	quizApp.storeUrl()
 })
 
-
+async function tagsInputs() {
+    const response = await fetch(tagsUrl + tagsInputField.value);
+    const data = await response.json();
+  
+    tagsInputField.addEventListener("keypress", (e) => {
+		if (e.key === "Enter") {
+			quizApp.tagsHandler(data)
+		}
+    });
+}
 
 checkBtn.addEventListener('click', () => {
 	quizApp.checkAnswer()
@@ -275,9 +288,13 @@ categorySelect.addEventListener('click', (event) => {
 	quizApp.showCheckboxes()
 })
 
-
+tagsInputs()
 quizApp.setupContent()
 quizApp.selectDifficulty()
 quizApp.numOfQuestions()
-tagsInputs(tagsUrl)
 getCategoriesDropdown(quizUrl)
+
+
+
+
+
