@@ -654,16 +654,29 @@ form {
 	}
 }
 
+  //----------------------------- Scoreboard -----------------------------
 
-
-
+.scoreboard {
+	@include flex;
+	flex-direction: column;
+	background-color: $third-color;
+	h1 {
+		margin-top: 1rem;
+	}
+	.line {
+		margin-top: 1rem;
+		height: 2px;
+		width: 85%;
+		background-color: #000;
+	}
+}
   //----------------------------- Footer -----------------------------
-  footer {
+footer {
 	@include flex;
 	position: fixed;
 	background: $third-color;
 	bottom: 0;
-	
+
 	min-width: 300px;
 	width: 100%;
 
@@ -672,4 +685,4 @@ form {
 		//display: none;
 
 	}
-  }
+}

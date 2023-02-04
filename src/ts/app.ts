@@ -20,10 +20,12 @@ const checkBtn = document.querySelector('#check-answer') as HTMLButtonElement;
 const awnserPrompt = document.querySelector('#awnser-prompt') as HTMLParagraphElement
 //const playAgainBtn = document.querySelector('#difficulty-span') as HTMLSpanElement;
 
-//Last section, display score
+//Last section, display and commit score
 const yourScoreResult = document.querySelector('#your-score-result') as HTMLElement;
 const yourScoreDifficulty = document.querySelector('#your-score-difficulty') as HTMLElement;
 const scoreArticle = document.querySelector('.score-article') as HTMLElement;
+const nicknameInput = (document.getElementById('nickname-input') as HTMLInputElement)
+const commitNicknameBtn = document.querySelector('#commit-nickname-btn') as HTMLButtonElement
 quizContent.style.display = 'none'
 scoreArticle.style.display = 'none'
 
@@ -51,6 +53,18 @@ let correctAnswer:
 	correctScore: 0,
 	askedCount: 0,
 	totalQuestion: 0
+}
+
+let userData:
+{
+	nickname: string,
+	difficulty: string,
+	score: number
+} 
+= {
+	nickname: "",
+	difficulty: "",
+	score: 0
 }
 
 let quizApp = {
@@ -247,7 +261,14 @@ let quizApp = {
 	setCount() {
 		totalQuestion.innerHTML = correctAnswer.totalQuestion.toString()
 		correctScoreSpan.innerHTML = correctAnswer.correctScore.toString()
-	}
+	},
+	// Commit score section
+	storeUserData() {
+		userData.nickname = nicknameInput.value
+		userData.difficulty = difficultySpan.innerText
+		userData.score = correctAnswer.correctScore
+		console.log(userData);
+	},
 }
 
 
@@ -291,6 +312,12 @@ checkBtn.addEventListener('click', () => {
 categorySelect.addEventListener('click', (event) => {
 	quizApp.showCheckboxes()
 })
+
+commitNicknameBtn.addEventListener('click', (event) => {
+	quizApp.storeUserData()
+})
+
+
 
 //Start program
 tagsInputs()
