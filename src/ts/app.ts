@@ -20,8 +20,12 @@ const checkBtn = document.querySelector('#check-answer') as HTMLButtonElement;
 const awnserPrompt = document.querySelector('#awnser-prompt') as HTMLParagraphElement
 //const playAgainBtn = document.querySelector('#difficulty-span') as HTMLSpanElement;
 
-
+//Last section, display score
+const yourScoreResult = document.querySelector('#your-score-result') as HTMLElement;
+const yourScoreDifficulty = document.querySelector('#your-score-difficulty') as HTMLElement;
+const scoreArticle = document.querySelector('.score-article') as HTMLElement;
 quizContent.style.display = 'none'
+scoreArticle.style.display = 'none'
 
 let expandDropdownCategory: boolean = false;
 let quizUrl = 'https://the-trivia-api.com/api/categories'
@@ -53,7 +57,9 @@ let quizApp = {
 	showCheckboxes() {
 		if(!expandDropdownCategory) {
 			categoryCheckbox.style.display = 'block'
+			
 			expandDropdownCategory = true;
+
 		} else {
 			categoryCheckbox.style.display = 'none';
 			expandDropdownCategory = false;
@@ -73,8 +79,8 @@ let quizApp = {
 		
 		categoryCheckbox.innerHTML = Object.keys(data)
 		.map(key => `
-			<label for="${key}">
-			<input type="checkbox" class="category-value" value=""/>${key}
+			<label>
+				<input type="checkbox" class="category-value" value=""/>${key}
 			</label>
 		`).join('');
 		
@@ -120,6 +126,7 @@ let quizApp = {
 		if (target.checked) {	
 			diffUrl = '&difficulty=' + target.value
 			difficultySpan.innerHTML = target.value.toUpperCase()
+			yourScoreDifficulty.innerHTML = `Difficulty: ${target.value}`
 			console.log(diffUrl)	
 		} 
 	},
@@ -175,6 +182,7 @@ let quizApp = {
 	// Second part of the Quiz
 	showQuestion(data: any) {
 		checkBtn.disabled = false;
+		checkBtn.style.display = "block"
 		mainContentStart.style.display = "none"
 		quizContent.style.display = "block"
 
@@ -205,6 +213,7 @@ let quizApp = {
 	},
 	checkAnswer() {
 		checkBtn.disabled = true
+		checkBtn.style.display = "none"
 		if(questionUnorderlist.querySelector('.selected')) {
 			let selectedAnswer = questionUnorderlist.querySelector('.selected')?.textContent
 			console.log(selectedAnswer)
@@ -219,13 +228,16 @@ let quizApp = {
 		} else {
 			awnserPrompt.innerHTML = `Please select a option.`
 			checkBtn.disabled = false;
+			checkBtn.style.display = "block"
 		}
 	},
 	checkCount() {
 		correctAnswer.askedCount++
 		this.setCount();
 		if(correctAnswer.askedCount === correctAnswer.totalQuestion) {
-			questionUnorderlist.innerHTML = `Your score: ${correctAnswer.correctScore} of ${correctAnswer.totalQuestion}`
+			quizContent.style.display = "none"
+			scoreArticle.style.display = "block"
+			yourScoreResult.innerHTML = `Your score: ${correctAnswer.correctScore} of ${correctAnswer.totalQuestion}`
 		} else {
 			setTimeout(() => {
 				requestCallApi(requestUrl)

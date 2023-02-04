@@ -17,7 +17,7 @@
 	<div class="wrapper">
 		<section>
 			<fieldset class="main-content">
-				<legend>QUIZ</legend>
+				<legend>NEW QUIZ</legend>
 
 				<section class="multiselect-categories input-frame">
 					<div class="select-category">
@@ -47,7 +47,7 @@
 						<input type="radio" class="difficulty-button" id="control_02" name="select" value="medium">
 						<label for="control_02">
 							<span>
-								<img src="https://api.iconify.design/mdi/fruit-watermelon.svg?width=50&height=60" alt="dog">
+								<img src="https://api.iconify.design/game-icons/cut-lemon.svg?width=50&height=60" alt="dog">
 							</span>
 						<h3>Medium</h3>
 						</label>
@@ -79,8 +79,7 @@
 						</div>
 				</section>
 				
-				<section class="tags-input-frame input-frame">
-					
+				<section class="tags-input-frame input-frame">				
 					<input name="tag-input" id="tags-input" placeholder="Search free-text (optional)" value="">
 					<div class="tags-box">
 						<!-- <div class="first"><h1>first</h1></div>
@@ -126,13 +125,33 @@
 					</div>
 				</fieldset>
 			</main>
+
+			<article class="score-article">
+				<div class="score-header">
+					<h1 id="your-score-result">Your score: 3 of 10</h1>
+					<h4 id="your-score-difficulty">Difficulty: easy</h4>
+				</div>
+				<div class="score-content">
+					<p>Do you want to commit your score to the scoreboard?</p>
+					<div>
+						<div id="input-nickname-div">
+							<input placeholder="Nickname">
+						</div>
+						<button class="standard-button">Commit Score</button>
+					</div>
+					<div id="play-again-div">
+						<button class="standard-button">Play Again?</button>
+					</div>
+				</div>
+			</article>
+
 		</section>
 	</div>
 
 	<footer>
 		<div class="score-newquiz-buttons">
-			<button>Scoreboard</button>
-			<button>New Quiz</button>
+			<button class="standard-button">Scoreboard</button>
+			<button class="standard-button">New Quiz</button>
 		</div>
 	</footer>
 

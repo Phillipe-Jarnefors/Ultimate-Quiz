@@ -12,6 +12,19 @@
 // 	position: relative;
 // }
 
+.standard-button {
+	
+	background: $first-color;
+	@include standard-button;
+	margin: 0.5rem 1rem;
+
+	&:hover {
+		background: $second-color;
+		cursor: pointer;
+		color: black;
+	}
+}
+
 header {
 	@include flex;
 	@include font-head;	
@@ -57,7 +70,7 @@ header {
 	//Display none for dev.
 	//display: none;
 	@include main-frame;
-	border: 2px solid $first-color;
+	border: 0px solid $first-color;
 	background: $third-color;
 	margin-bottom: 3rem;
 	margin-top: 1rem;
@@ -87,10 +100,7 @@ header {
 			top: 0;
 			bottom: 0;
 		}
-	}
-
-	.select-category {
-
+		
 		select {
 			width: 100%;
 			@include input-border;
@@ -102,6 +112,7 @@ header {
 		}
 	}
 
+	
 	.checkbox-category {
 		display: none;
 		border: 2px $first-color solid;
@@ -211,14 +222,14 @@ form {
 		&::before {
 			content: " ";
 			position: absolute;
-			height: 10px;
+			height: 6px;
 			width: 100%;
 			border-radius: 1rem;
 			border: 2px solid black;
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			background: $third-color;
+			background: $second-color;
 		}
 		input, label {
 			box-sizing: border-box;
@@ -494,7 +505,7 @@ form {
 	// DISPLAY NONE!
 	//display: none;
 	@include main-frame;
-	border: 2px solid $first-color;
+	border: 0px solid $first-color;
 	background: $third-color;
 
 	legend {
@@ -505,7 +516,7 @@ form {
 		@include main-frame;
 		min-height: 9rem;
 		background: white;
-		
+		border: none;
 		
 		legend {
 			font-size: medium;
@@ -583,6 +594,68 @@ form {
 		color: black;
 	}
   }
+//----------------------------- Score-content -----------------------------
+.score-article {
+	margin-top: 5rem;
+	.score-header {
+		background: $second-color;
+		// height: 5rem;
+		@include flex;
+		flex-direction: column;
+
+		h1 {
+			padding-top: 1.2rem;
+			font-size: 1.5rem;
+		}
+
+		h4 {
+			padding: 1.2rem;
+			font-size: medium;
+		}
+	}
+
+	.score-content {
+		background-color: $third-color;
+		@include flex;
+		flex-direction: column;
+
+		p {
+			margin: 3rem 2rem 1.5rem 2rem;
+		}
+
+		#input-nickname-div {
+			border: 3px solid $first-color;
+			border-radius: 0.2rem;
+
+			input {
+				padding: 0.5rem;
+				border: none;
+			}
+		}
+
+		div {
+			@include flex;
+			flex-direction: column;
+		}
+
+		#play-again-div {
+			margin: 4rem 0 1rem 0;
+
+			button {
+				background: $second-color!important;
+				color: black!important;
+			}
+
+			button:hover {
+				background: $first-color!important;
+				color: white!important;
+			}
+		}
+	}
+}
+
+
+
 
   //----------------------------- Footer -----------------------------
   footer {
@@ -597,15 +670,6 @@ form {
 	.score-newquiz-buttons {
 		//display none
 		//display: none;
-		button {
-			background: $first-color;
-			@include standard-button;
-			margin: 0.5rem 1rem;
-		}
-		button:hover {
-			background: $second-color;
-			cursor: pointer;
-			color: black;
-		}
+
 	}
   }
