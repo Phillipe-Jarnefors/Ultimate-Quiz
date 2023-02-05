@@ -578,7 +578,7 @@ form {
 	#awnser-prompt {
 		@include flex;
 		text-align: center;
-		margin-top: 4rem;
+		margin: 2rem 0;
 		width: 100%;
 	}
 
@@ -664,7 +664,7 @@ form {
 		margin-top: 1rem;
 	}
 	.line {
-		margin-top: 1rem;
+		margin: 1rem 0rem;
 		height: 2px;
 		width: 85%;
 		background-color: #000;
@@ -683,6 +683,6 @@ footer {
 	// .score-newquiz-buttons {
 	// 	//display none
 	// 	//display: none;
-
+		
 	// }
 }

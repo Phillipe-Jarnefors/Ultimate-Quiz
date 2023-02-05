@@ -18,7 +18,6 @@ const totalQuestion = document.querySelector('#total-question') as HTMLSpanEleme
 const difficultySpan = document.querySelector('#difficulty-span') as HTMLSpanElement;
 const checkBtn = document.querySelector('#check-answer') as HTMLButtonElement;
 const awnserPrompt = document.querySelector('#awnser-prompt') as HTMLParagraphElement
-//const playAgainBtn = document.querySelector('#difficulty-span') as HTMLSpanElement;
 
 //Last section, display and commit score
 const yourScoreResult = document.querySelector('#your-score-result') as HTMLElement;
@@ -28,6 +27,21 @@ const nicknameInput = (document.getElementById('nickname-input') as HTMLInputEle
 const commitNicknameBtn = document.querySelector('#commit-nickname-btn') as HTMLButtonElement
 const scoreboardSection = document.querySelector('.scoreboard') as HTMLDivElement;
 const scoreboardArticle = document.querySelector('.scoreboard-article') as HTMLElement;
+
+//General-btns
+let playAgain = () => {
+	quizApp.resetQuiz()
+}
+const playAgainBtn = document.getElementsByClassName('new-quiz')
+
+for (let button of playAgainBtn) {
+	button.addEventListener('click', playAgain)
+}
+
+
+
+
+
 
 scoreboardArticle.style.display = 'none'
 quizContent.style.display = 'none'
@@ -44,6 +58,8 @@ let questionsQuantityUrl: string = ""
 let tagsString: string = ""
 let tagsArray: string[] = []
 let stringOfArray: string = ""
+let targetValue: number;
+
 
 interface Userstorage {
 	nickname: string,
@@ -160,7 +176,8 @@ let quizApp = {
 				if (target.checked) {
 					questionsQuantityUrl = '&limit=' + target.value
 					console.log(questionsQuantityUrl)	
-					correctAnswer.totalQuestion = + target.value
+					targetValue = Number(target.value)
+					correctAnswer.totalQuestion = targetValue
 				}
 			})
 		}
@@ -272,28 +289,53 @@ let quizApp = {
 		correctScoreSpan.innerHTML = correctAnswer.correctScore.toString()
 	},
 	// Commit score section
-	storeUserData() {
-		userData.nickname = nicknameInput.value
-		userData.difficulty = difficultySpan.innerText
-		userData.score = correctAnswer.correctScore
-
+	storeUserData() {		
+		userData = { nickname: nicknameInput.value, difficulty: difficultySpan.innerText, score: correctAnswer.correctScore }
 		storedUsers.push(userData)
 
 		this.printScoreboard()
 	},
 	printScoreboard() {
-		scoreArticle.style.display = "none"
-		scoreboardArticle.style.display = 'block'
+		scoreboardArticle.style.display = "block"
+		scoreArticle.style.display = 'none'
+		scoreboardSection.innerHTML = ""
 		
 		storedUsers.forEach(user => {
-			scoreboardSection.innerHTML = `
+			scoreboardSection.innerHTML += `
 			<h1>${user.nickname}</h1>
 			<p>Score: ${user.score} of ${correctAnswer.totalQuestion}</p>
 			<p>Difficulty: ${user.difficulty}</p>
 			<div class="line"></div>
 			`
-
 		})
+		console.log(storedUsers)
+	},
+	resetQuiz() {
+		scoreArticle.style.display = 'none'
+		scoreboardArticle.style.display = 'none'
+		mainContentStart.style.display = 'block'
+		quizContent.style.display = 'none'
+
+		targetValue = 2
+		tagsInputs()
+		quizApp.setupContent()
+		quizApp.selectDifficulty()
+		quizApp.numOfQuestions()
+		getCategoriesDropdown(quizUrl)
+
+		expandDropdownCategory = false;
+		quizUrl = 'https://the-trivia-api.com/api/categories'
+		tagsUrl = 'https://the-trivia-api.com/api/tags'
+		requestUrl = 'https://the-trivia-api.com/api/questions?categories='
+		categoryUrl = ""
+		valueArray = []
+		diffUrl = ""
+		questionsQuantityUrl = ""
+		tagsString = ""
+		tagsArray = []
+		stringOfArray = ""
+
+		correctAnswer = { answer: "", correctScore: 0, askedCount: 0, totalQuestion: 0, }
 	}
 }
 
