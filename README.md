@@ -36,5 +36,5 @@ npm run dev
 5) Run local-server http://localhost:1234/ in browser.
 
 ## How to use
-
-[img]https://i.imgur.com/mAGkpAt.png[/img]
+![App screenshot](https://i.imgur.com/RCKCASO.png)
+![App screenshot](https://i.imgur.com/mAGkpAt.png)
