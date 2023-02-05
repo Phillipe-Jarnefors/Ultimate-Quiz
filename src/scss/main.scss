@@ -1,16 +1,9 @@
 @use 'abstracts/index' as *;
 
-
-
-
 * {
 	box-sizing: border-box;
 	margin: 0;
 }
-
-// body {
-// 	position: relative;
-// }
 
 .standard-button {
 	
@@ -419,7 +412,6 @@ form {
 	display: grid;
 	place-items: center;
 	
-	
 	a {
 	  position: relative;
 	  background: #444;
@@ -580,6 +572,10 @@ form {
 		text-align: center;
 		margin: 2rem 0;
 		width: 100%;
+
+		img {
+			margin-right: 0.5rem;
+		}
 	}
 
 	button {
@@ -602,50 +598,40 @@ form {
 		// height: 5rem;
 		@include flex;
 		flex-direction: column;
-
 		h1 {
 			padding-top: 1.2rem;
 			font-size: 1.5rem;
 		}
-
 		h4 {
 			padding: 1.2rem;
 			font-size: medium;
 		}
 	}
-
 	.score-content {
 		background-color: $third-color;
 		@include flex;
 		flex-direction: column;
-
 		p {
 			margin: 3rem 2rem 1.5rem 2rem;
 		}
-
 		#input-nickname-div {
 			border: 3px solid $first-color;
 			border-radius: 0.2rem;
-
 			input {
 				padding: 0.5rem;
 				border: none;
 			}
 		}
-
 		div {
 			@include flex;
 			flex-direction: column;
 		}
-
 		#play-again-div {
 			margin: 4rem 0 1rem 0;
-
 			button {
 				background: $second-color!important;
 				color: black!important;
 			}
-
 			button:hover {
 				background: $first-color!important;
 				color: white!important;
@@ -653,9 +639,7 @@ form {
 		}
 	}
 }
-
   //----------------------------- Scoreboard -----------------------------
-
 .scoreboard {
 	@include flex;
 	flex-direction: column;
@@ -676,13 +660,6 @@ footer {
 	position: fixed;
 	background: $third-color;
 	bottom: 0;
-
 	min-width: 300px;
 	width: 100%;
-
-	// .score-newquiz-buttons {
-	// 	//display none
-	// 	//display: none;
-		
-	// }
 }

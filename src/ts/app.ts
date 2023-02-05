@@ -29,19 +29,20 @@ const scoreboardSection = document.querySelector('.scoreboard') as HTMLDivElemen
 const scoreboardArticle = document.querySelector('.scoreboard-article') as HTMLElement;
 
 //General-btns
+const scoreboardBtn = document.querySelector('#scoreboard-btn') as HTMLButtonElement;
+scoreboardBtn.addEventListener('click', (e) => {
+	quizApp.resetQuiz()
+	mainContentStart.style.display = "none"
+	scoreboardArticle.style.display = "block"
+})
+
 let playAgain = () => {
 	quizApp.resetQuiz()
 }
 const playAgainBtn = document.getElementsByClassName('new-quiz')
-
 for (let button of playAgainBtn) {
 	button.addEventListener('click', playAgain)
 }
-
-
-
-
-
 
 scoreboardArticle.style.display = 'none'
 quizContent.style.display = 'none'
@@ -60,21 +61,17 @@ let tagsArray: string[] = []
 let stringOfArray: string = ""
 let targetValue: number;
 
-
 interface Userstorage {
 	nickname: string,
 	difficulty: string,
 	score: number
 }
-
 let userData: Userstorage = {
 	nickname: "",
 	difficulty: "",
 	score: 0
 }
-
 let storedUsers: Userstorage[] = []
-
 let correctAnswer: 
 { 	
 	answer: string, 
@@ -89,16 +86,11 @@ let correctAnswer:
 	totalQuestion: 0,
 }
 
-
-
-
 let quizApp = {
 	showCheckboxes() {
 		if(!expandDropdownCategory) {
-			categoryCheckbox.style.display = 'block'
-			
+			categoryCheckbox.style.display = 'block'		
 			expandDropdownCategory = true;
-
 		} else {
 			categoryCheckbox.style.display = 'none';
 			expandDropdownCategory = false;
@@ -107,33 +99,27 @@ let quizApp = {
 	setupContent() {
      	difficultyButtons[0].checked = true;
 		diffUrl = '&difficulty=easy'
-		difficultySpan.innerHTML = 'EASY'
-		
+		difficultySpan.innerHTML = 'EASY'		
 		numOfQuestionsBtns[0].checked = true;
 		questionsQuantityUrl = '&limit=2'
 		correctAnswer.totalQuestion = 2
 	},
 	printCategories(data: { [key:string]: string[] }) {
-		let checkboxValues: string[] = Object.values(data).map((values) => values[0])
-		
+		let checkboxValues: string[] = Object.values(data).map((values) => values[0])	
 		categoryCheckbox.innerHTML = Object.keys(data)
 		.map(key => `
 			<label>
 				<input type="checkbox" class="category-value" value=""/>${key}
 			</label>
-		`).join('');
-		
-		this.testCheckCategories(checkboxValues)
-		
+		`).join('');		
+		this.testCheckCategories(checkboxValues)		
 	},
 	testCheckCategories(checkboxValues: string[]) {
-		const categoryCheckboxValue = document.querySelectorAll('.category-value') as NodeListOf<HTMLInputElement>
-	
+		const categoryCheckboxValue = document.querySelectorAll('.category-value') as NodeListOf<HTMLInputElement>	
 		categoryCheckboxValue.forEach((checkbox, index) => {
 			checkboxValues.forEach((box, i) => {
 				categoryCheckboxValue[i].value = `${box}`
 			})
-
 			checkbox.addEventListener('change', e => {
 				if(checkbox.checked) {
 					if (!valueArray.includes(checkboxValues[index])) {
@@ -147,10 +133,9 @@ let quizApp = {
 				}
 				let addValueToArray = valueArray.join(',')
 				categoryUrl += addValueToArray
-
 				//CLG for dev
-				console.log(categoryUrl)
-				console.log(valueArray)		
+				//console.log(categoryUrl)
+				//console.log(valueArray)		
 			})
 		})
 	},
@@ -160,8 +145,7 @@ let quizApp = {
 		}
 	},
 	selectedDifficult(e: Event) {
-		const target = e.target as HTMLInputElement;
-		
+		const target = e.target as HTMLInputElement;	
 		if (target.checked) {	
 			diffUrl = '&difficulty=' + target.value
 			difficultySpan.innerHTML = target.value.toUpperCase()
@@ -185,16 +169,13 @@ let quizApp = {
 	tagsHandler(data: any) {		
 		const inputValueTag = tagsInputField.value
 		const outputElement = `<div class="tags-div"><h1 class="tags">${inputValueTag}</h1></div>`
-
 		const foundTag = data.find((tag:any) => tag === tagsInputField.value);
-
         if (foundTag) {
 			paragraphError.innerHTML = ""
 			tagsBoxDiv.innerHTML += outputElement;
 			tagsArray.push(tagsInputField.value);
 			tagsInputField.value = "";
-			const tagsDiv = document.getElementsByClassName('tags-div')
-			
+			const tagsDiv = document.getElementsByClassName('tags-div')		
 			for (const div of tagsDiv) {
 				const p = div.getElementsByClassName('tags')[0]
 				p.addEventListener('click', () => {					
@@ -213,8 +194,7 @@ let quizApp = {
 		if(tagsArray.length > 0) {
 			stringOfArray = tagsArray.toString()
 			tagsString = '&tags=' + stringOfArray
-		}
-		
+		}		
 		requestUrl += categoryUrl + questionsQuantityUrl + diffUrl  + tagsString;
 		console.log(requestUrl);
 		requestCallApi(requestUrl)
@@ -225,12 +205,10 @@ let quizApp = {
 		checkBtn.style.display = "block"
 		mainContentStart.style.display = "none"
 		quizContent.style.display = "block"
-
 		correctAnswer.answer = data.correctAnswer
 		let incorrectAnswers = data.incorrectAnswers
 		let optionsList = incorrectAnswers
 		optionsList.splice(Math.floor(Math.random() * (incorrectAnswers.length + 1)), 0, correctAnswer.answer)
-
 		theQuestionCategory.innerHTML = `${data.category}`
 		theQuestion.innerHTML = `${data.question}`
 		questionUnorderlist.innerHTML = `
@@ -260,9 +238,16 @@ let quizApp = {
 			console.log(correctAnswer)
 			if(selectedAnswer == correctAnswer.answer) {
 				correctAnswer.correctScore++
-				awnserPrompt.innerHTML = 'Correct Answer!'
+				awnserPrompt.innerHTML = `
+				<img src="https://api.iconify.design/ph/check-circle-bold.svg?color=%230fa000&width=30&height=30">
+				<p> Correct Answer!</p>`
 			} else {
-				awnserPrompt.innerHTML = `Incorrect Answer! <br><br>Correct Answer:  ${correctAnswer.answer}`
+				//#0fa958 <br><br><br>
+				awnserPrompt.innerHTML = `
+				<img src="https://api.iconify.design/material-symbols/error-outline-rounded.svg?color=%230fa000&width=30&height=30">
+				<p>Incorrect Answer!<br>
+				Correct Answer: ${correctAnswer.answer}</p>
+				`
 			}
 			this.checkCount()
 		} else {
@@ -292,18 +277,16 @@ let quizApp = {
 	storeUserData() {		
 		userData = { nickname: nicknameInput.value, difficulty: difficultySpan.innerText, score: correctAnswer.correctScore }
 		storedUsers.push(userData)
-
 		this.printScoreboard()
 	},
 	printScoreboard() {
 		scoreboardArticle.style.display = "block"
 		scoreArticle.style.display = 'none'
-		scoreboardSection.innerHTML = ""
-		
+		scoreboardSection.innerHTML = ""	
 		storedUsers.forEach(user => {
 			scoreboardSection.innerHTML += `
 			<h1>${user.nickname}</h1>
-			<p>Score: ${user.score} of ${correctAnswer.totalQuestion}</p>
+			<p>Score: ${user.score}</p>
 			<p>Difficulty: ${user.difficulty}</p>
 			<div class="line"></div>
 			`
@@ -349,8 +332,7 @@ async function getCategoriesDropdown(categories: string) {
 
 async function requestCallApi(requestUrl: string) {
 	const response = await fetch(requestUrl)
-	const data = await response.json()
-	
+	const data = await response.json()	
 	quizApp.setCount()
 	awnserPrompt.innerHTML = ""
 	quizApp.showQuestion(data[0])
@@ -358,8 +340,7 @@ async function requestCallApi(requestUrl: string) {
 
 async function tagsInputs() {
 	const response = await fetch(tagsUrl + tagsInputField.value);
-	const data = await response.json();
-  
+	const data = await response.json(); 
 	tagsInputField.addEventListener("keypress", (e) => {
 		if (e.key === "Enter") {
 			quizApp.tagsHandler(data)
@@ -371,21 +352,16 @@ async function tagsInputs() {
 startQuizBtn.addEventListener('click', (start) => {
 	quizApp.storeUrl()
 })
-
 checkBtn.addEventListener('click', () => {
 	quizApp.checkAnswer()
 })
-
 // Hide / Show categories
 categorySelect.addEventListener('click', (event) => {
 	quizApp.showCheckboxes()
 })
-
 commitNicknameBtn.addEventListener('click', (event) => {
 	quizApp.storeUserData()
 })
-
-
 
 //Start program
 tagsInputs()
