@@ -26,6 +26,10 @@ const yourScoreDifficulty = document.querySelector('#your-score-difficulty') as 
 const scoreArticle = document.querySelector('.score-article') as HTMLElement;
 const nicknameInput = (document.getElementById('nickname-input') as HTMLInputElement)
 const commitNicknameBtn = document.querySelector('#commit-nickname-btn') as HTMLButtonElement
+const scoreboardSection = document.querySelector('.scoreboard') as HTMLDivElement;
+const scoreboardArticle = document.querySelector('.scoreboard-article') as HTMLElement;
+
+scoreboardArticle.style.display = 'none'
 quizContent.style.display = 'none'
 scoreArticle.style.display = 'none'
 
@@ -41,31 +45,36 @@ let tagsString: string = ""
 let tagsArray: string[] = []
 let stringOfArray: string = ""
 
+interface Userstorage {
+	nickname: string,
+	difficulty: string,
+	score: number
+}
+
+let userData: Userstorage = {
+	nickname: "",
+	difficulty: "",
+	score: 0
+}
+
+let storedUsers: Userstorage[] = []
+
 let correctAnswer: 
 { 	
 	answer: string, 
 	correctScore: number, 
 	askedCount: number, 
-	totalQuestion: number 
+	totalQuestion: number,	
 } 
 = {
 	answer: "",
 	correctScore: 0,
 	askedCount: 0,
-	totalQuestion: 0
+	totalQuestion: 0,
 }
 
-let userData:
-{
-	nickname: string,
-	difficulty: string,
-	score: number
-} 
-= {
-	nickname: "",
-	difficulty: "",
-	score: 0
-}
+
+
 
 let quizApp = {
 	showCheckboxes() {
@@ -267,8 +276,25 @@ let quizApp = {
 		userData.nickname = nicknameInput.value
 		userData.difficulty = difficultySpan.innerText
 		userData.score = correctAnswer.correctScore
-		console.log(userData);
+
+		storedUsers.push(userData)
+
+		this.printScoreboard()
 	},
+	printScoreboard() {
+		scoreArticle.style.display = "none"
+		scoreboardArticle.style.display = 'block'
+		
+		storedUsers.forEach(user => {
+			scoreboardSection.innerHTML = `
+			<h1>${user.nickname}</h1>
+			<p>Score: ${user.score} of ${correctAnswer.totalQuestion}</p>
+			<p>Difficulty: ${user.difficulty}</p>
+			<div class="line"></div>
+			`
+
+		})
+	}
 }
 
 

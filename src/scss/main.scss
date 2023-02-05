@@ -595,7 +595,7 @@ form {
 	}
   }
 //----------------------------- Score-content -----------------------------
-.score-article {
+.score-article-css {
 	margin-top: 5rem;
 	.score-header {
 		background: $second-color;
@@ -680,9 +680,9 @@ footer {
 	min-width: 300px;
 	width: 100%;
 
-	.score-newquiz-buttons {
-		//display none
-		//display: none;
+	// .score-newquiz-buttons {
+	// 	//display none
+	// 	//display: none;
 
-	}
+	// }
 }
