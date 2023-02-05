@@ -1,10 +1,10 @@
-# Ultimate-Quiz, a fun quiz game!
+# Ultimate-Quiz!
 
-## My app test your general knowledge about history, music, geography and alot of more categories.
-- You simply choose your category/categories. 
+## My app test your knowledge in quiz-form.
+- Choose your category/categories. 
 - Three diffrent difficulties.
 - How many questions per run.
-- Free choice of tags, what you prefer to show up in your quiz.
+- Free choice of preferd tags.
 
 I developed this app with TypeScript, Sass, AJAX and it's bundle with Parcel. 
 The questions is fetched via The Trivia API, link futher down this file.
@@ -36,4 +36,5 @@ npm run dev
 5) Run local-server http://localhost:1234/ in browser.
 
 ## How to use
-![App screenshot](https://i.imgur.com/RCKCASO.png)
+
+[img]https://i.imgur.com/mAGkpAt.png[/img]
