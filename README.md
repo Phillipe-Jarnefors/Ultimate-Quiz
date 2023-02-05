@@ -1,6 +1,6 @@
-# Ultimate-Quiz, a fun quiz game!
+# Ultimate-Quiz!
 
-## My app test your general knowledge about history, music, geography and alot of more categories.
+## My app test your knowledge in quiz-form.
 - You simply choose your category/categories. 
 - Three diffrent difficulties.
 - How many questions per run.
