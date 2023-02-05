@@ -28,21 +28,7 @@ const commitNicknameBtn = document.querySelector('#commit-nickname-btn') as HTML
 const scoreboardSection = document.querySelector('.scoreboard') as HTMLDivElement;
 const scoreboardArticle = document.querySelector('.scoreboard-article') as HTMLElement;
 
-//General-btns
-const scoreboardBtn = document.querySelector('#scoreboard-btn') as HTMLButtonElement;
-scoreboardBtn.addEventListener('click', (e) => {
-	quizApp.resetQuiz()
-	mainContentStart.style.display = "none"
-	scoreboardArticle.style.display = "block"
-})
 
-let playAgain = () => {
-	quizApp.resetQuiz()
-}
-const playAgainBtn = document.getElementsByClassName('new-quiz')
-for (let button of playAgainBtn) {
-	button.addEventListener('click', playAgain)
-}
 
 scoreboardArticle.style.display = 'none'
 quizContent.style.display = 'none'
@@ -85,6 +71,11 @@ let correctAnswer:
 	askedCount: 0,
 	totalQuestion: 0,
 }
+const imageSrc = 
+{
+	checkmark: "https://api.iconify.design/ph/check-circle-bold.svg?color=%230fa000&width=30&height=30",
+	warning: "https://api.iconify.design/material-symbols/error-outline-rounded.svg?color=red&width=30&height=30"
+}
 
 let quizApp = {
 	showCheckboxes() {
@@ -121,6 +112,7 @@ let quizApp = {
 				categoryCheckboxValue[i].value = `${box}`
 			})
 			checkbox.addEventListener('change', e => {
+				e.preventDefault()
 				if(checkbox.checked) {
 					if (!valueArray.includes(checkboxValues[index])) {
 						valueArray.push(checkboxValues[index])
@@ -162,7 +154,7 @@ let quizApp = {
 					console.log(questionsQuantityUrl)	
 					targetValue = Number(target.value)
 					correctAnswer.totalQuestion = targetValue
-				}
+				} 
 			})
 		}
 	},
@@ -186,11 +178,10 @@ let quizApp = {
         } else {
 			paragraphError.style.fontSize = "1rem"
 			paragraphError.style.color = "red"	
-			paragraphError.innerHTML = "Tag not found, please try another!"   	
+			paragraphError.innerHTML = `<img src="${imageSrc.warning}">Tag not found.`   	
         }	
 	},	
 	storeUrl() {
-		//mainContentStart.style.display = 'none'
 		if(tagsArray.length > 0) {
 			stringOfArray = tagsArray.toString()
 			tagsString = '&tags=' + stringOfArray
@@ -239,19 +230,18 @@ let quizApp = {
 			if(selectedAnswer == correctAnswer.answer) {
 				correctAnswer.correctScore++
 				awnserPrompt.innerHTML = `
-				<img src="https://api.iconify.design/ph/check-circle-bold.svg?color=%230fa000&width=30&height=30">
+				<img src="${imageSrc.checkmark}">
 				<p> Correct Answer!</p>`
 			} else {
-				//#0fa958 <br><br><br>
 				awnserPrompt.innerHTML = `
-				<img src="https://api.iconify.design/material-symbols/error-outline-rounded.svg?color=%230fa000&width=30&height=30">
+				<img src="${imageSrc.warning}">
 				<p>Incorrect Answer!<br>
 				Correct Answer: ${correctAnswer.answer}</p>
 				`
 			}
 			this.checkCount()
 		} else {
-			awnserPrompt.innerHTML = `Please select a option.`
+			awnserPrompt.innerHTML = `<img src="${imageSrc.warning}"><p>Please select a option.</p>`
 			checkBtn.disabled = false;
 			checkBtn.style.display = "block"
 		}
@@ -291,25 +281,20 @@ let quizApp = {
 			<div class="line"></div>
 			`
 		})
-		console.log(storedUsers)
+		//clg for dev
+		//console.log(storedUsers)
 	},
 	resetQuiz() {
 		scoreArticle.style.display = 'none'
 		scoreboardArticle.style.display = 'none'
-		mainContentStart.style.display = 'block'
 		quizContent.style.display = 'none'
+		mainContentStart.style.display = 'block'
 
-		targetValue = 2
-		tagsInputs()
-		quizApp.setupContent()
-		quizApp.selectDifficulty()
-		quizApp.numOfQuestions()
-		getCategoriesDropdown(quizUrl)
-
-		expandDropdownCategory = false;
+		expandDropdownCategory = true;
 		quizUrl = 'https://the-trivia-api.com/api/categories'
 		tagsUrl = 'https://the-trivia-api.com/api/tags'
 		requestUrl = 'https://the-trivia-api.com/api/questions?categories='
+		
 		categoryUrl = ""
 		valueArray = []
 		diffUrl = ""
@@ -317,8 +302,9 @@ let quizApp = {
 		tagsString = ""
 		tagsArray = []
 		stringOfArray = ""
-
 		correctAnswer = { answer: "", correctScore: 0, askedCount: 0, totalQuestion: 0, }
+		nicknameInput.value = ""
+		this.setupContent()
 	}
 }
 
@@ -349,19 +335,35 @@ async function tagsInputs() {
 }
 
 // AddEventListernes
-startQuizBtn.addEventListener('click', (start) => {
+startQuizBtn.addEventListener('click', () => {
 	quizApp.storeUrl()
 })
 checkBtn.addEventListener('click', () => {
 	quizApp.checkAnswer()
 })
 // Hide / Show categories
-categorySelect.addEventListener('click', (event) => {
+categorySelect.addEventListener('click', () => {
 	quizApp.showCheckboxes()
 })
-commitNicknameBtn.addEventListener('click', (event) => {
+commitNicknameBtn.addEventListener('click', () => {
 	quizApp.storeUserData()
 })
+
+//General-btns
+const scoreboardBtn = document.querySelector('#scoreboard-btn') as HTMLButtonElement;
+scoreboardBtn.addEventListener('click', (e) => {
+	e.preventDefault()
+	quizApp.resetQuiz()
+	mainContentStart.style.display = "none"
+	scoreboardArticle.style.display = "block"
+})
+let playAgain = () => {
+	quizApp.resetQuiz()
+}
+const playAgainBtn = document.getElementsByClassName('new-quiz')
+for (let button of playAgainBtn) {
+	button.addEventListener('click', playAgain)
+}
 
 //Start program
 tagsInputs()
