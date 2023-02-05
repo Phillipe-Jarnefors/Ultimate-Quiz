@@ -1,10 +1,8 @@
 # Ultimate-Quiz!
 
 ## My app test your knowledge in quiz-form.
-- Choose your category/categories. 
-- Three diffrent difficulties.
-- How many questions per run.
-- Free choice of preferd tags.
+
+![App screenshot](https://i.imgur.com/mAGkpAt.png)
 
 I developed this app with TypeScript, Sass, AJAX and it's bundle with Parcel. 
 The questions is fetched via The Trivia API, link futher down this file.
@@ -36,4 +34,14 @@ npm run dev
 5) Run local-server http://localhost:1234/ in browser.
 
 ## How to use
-![App screenshot](https://i.imgur.com/mAGkpAt.png)
+- Choose your category/categories. 
+- Three diffrent difficulties.
+- How many questions per run.
+- Free choice of preferd tags.
+- Press "let's go"
+
+You will now start the quiz with your preferences!
+Finish the task and commit to scoreboard to compete with your friends.
+
+You can anytime restart the quiz and also go to scoreboard section.
+Have fun! :)
