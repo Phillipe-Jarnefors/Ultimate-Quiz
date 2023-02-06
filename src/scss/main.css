@@ -404,7 +404,7 @@ form:invalid + button {
   padding: 0.5rem 0 0.5rem 1rem;
   border: 1px solid black;
   font-weight: bold;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
 }
 .tags-input-frame .tags-box {
   display: flex;
@@ -417,7 +417,7 @@ form:invalid + button {
   padding: 0.5rem 1.2rem;
   background: #f8da5b;
   border: 2px solid black;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   margin-top: 1rem;
 }
 .tags-input-frame .tags-box div:hover {

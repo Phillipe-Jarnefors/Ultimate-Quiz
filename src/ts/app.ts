@@ -371,8 +371,3 @@ quizApp.setupContent()
 quizApp.selectDifficulty()
 quizApp.numOfQuestions()
 getCategoriesDropdown(quizUrl)
-
-
-
-
-
