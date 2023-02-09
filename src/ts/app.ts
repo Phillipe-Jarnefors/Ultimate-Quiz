@@ -28,8 +28,6 @@ const commitNicknameBtn = document.querySelector('#commit-nickname-btn') as HTML
 const scoreboardSection = document.querySelector('.scoreboard') as HTMLDivElement;
 const scoreboardArticle = document.querySelector('.scoreboard-article') as HTMLElement;
 
-
-
 scoreboardArticle.style.display = 'none'
 quizContent.style.display = 'none'
 scoreArticle.style.display = 'none'
@@ -161,7 +159,7 @@ let quizApp = {
 	tagsHandler(data: any) {		
 		const inputValueTag = tagsInputField.value
 		const outputElement = `<div class="tags-div"><h1 class="tags">${inputValueTag}</h1></div>`
-		const foundTag = data.find((tag:any) => tag === tagsInputField.value);
+		const foundTag = data.find((tag:string) => tag === tagsInputField.value);
         if (foundTag) {
 			paragraphError.innerHTML = ""
 			tagsBoxDiv.innerHTML += outputElement;
@@ -171,7 +169,7 @@ let quizApp = {
 			for (const div of tagsDiv) {
 				const p = div.getElementsByClassName('tags')[0]
 				p.addEventListener('click', () => {					
-					tagsArray = tagsArray.filter(event => event !== p.innerHTML)			
+					tagsArray = tagsArray.filter(string => string !== p.innerHTML)			
 					div.remove()
 				})
 		  	}  
@@ -308,7 +306,6 @@ let quizApp = {
 	}
 }
 
-
 // Async functions
 async function getCategoriesDropdown(categories: string) {
 	const response = await fetch(categories);
@@ -348,6 +345,7 @@ categorySelect.addEventListener('click', () => {
 commitNicknameBtn.addEventListener('click', () => {
 	quizApp.storeUserData()
 })
+
 
 //General-btns
 const scoreboardBtn = document.querySelector('#scoreboard-btn') as HTMLButtonElement;

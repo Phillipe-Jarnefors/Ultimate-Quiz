@@ -368,10 +368,10 @@ form {
 	
 	input {
 		width: $max-width;
-		padding: 0.5rem 0 0.5rem 1rem;
+		@include input-border;
 		border: 1px solid black;
 		font-weight: $font-weight;
-		border-radius: 0.2rem;
+		
 	}
 
 	.tags-box {	
