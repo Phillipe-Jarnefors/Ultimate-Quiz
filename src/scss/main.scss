@@ -370,8 +370,7 @@ form {
 		width: $max-width;
 		@include input-border;
 		border: 1px solid black;
-		font-weight: $font-weight;
-		
+		font-weight: $font-weight;	
 	}
 
 	.tags-box {	

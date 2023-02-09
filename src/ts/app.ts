@@ -122,10 +122,7 @@ let quizApp = {
 						categoryUrl = ''
 				}
 				let addValueToArray = valueArray.join(',')
-				categoryUrl += addValueToArray
-				//CLG for dev
-				//console.log(categoryUrl)
-				//console.log(valueArray)		
+				categoryUrl += addValueToArray	
 			})
 		})
 	},
@@ -263,9 +260,13 @@ let quizApp = {
 	},
 	// Commit score section
 	storeUserData() {		
-		userData = { nickname: nicknameInput.value, difficulty: difficultySpan.innerText, score: correctAnswer.correctScore }
-		storedUsers.push(userData)
-		this.printScoreboard()
+		if(nicknameInput.value.length < 3) {
+			alert('Your nickname is too short.')
+		} else {
+			userData = { nickname: nicknameInput.value, difficulty: difficultySpan.innerText, score: correctAnswer.correctScore }
+			storedUsers.push(userData)
+			this.printScoreboard()
+		}
 	},
 	printScoreboard() {
 		scoreboardArticle.style.display = "block"
@@ -345,7 +346,6 @@ categorySelect.addEventListener('click', () => {
 commitNicknameBtn.addEventListener('click', () => {
 	quizApp.storeUserData()
 })
-
 
 //General-btns
 const scoreboardBtn = document.querySelector('#scoreboard-btn') as HTMLButtonElement;
