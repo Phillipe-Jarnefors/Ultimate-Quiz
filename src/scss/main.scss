@@ -83,6 +83,7 @@ header {
 
 	.select-category {
 		position: relative;
+		cursor: pointer;
 
 		.over-select {
 			position: absolute;
@@ -365,8 +366,16 @@ form {
 
 .tags-input-frame {
 	margin-top: 3rem;
+	@include input-border;
+	background: $fourth-color;
+	border: 4px solid white;
+	h4 {
+
+		@include flex;
+	}
 	
 	input {
+		margin-top: $margin-top-general;
 		width: $max-width;
 		@include input-border;
 		border: 1px solid black;
@@ -493,6 +502,7 @@ form {
 		min-height: 9rem;
 		background: white;
 		border: none;
+		box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
 		
 		legend {
 			font-size: medium;
