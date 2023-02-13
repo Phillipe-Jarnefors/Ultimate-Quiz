@@ -63,7 +63,7 @@
 
 				<section class="form-wrapper">
 					<form action="/p/quote.php" method="GET">
-						<p id="form-title"><b>Number of Questions:</b></p>
+						<h4 id="form-title"><b>Number of Questions:</b></h4>
 						<div id="debt-amount-slider">
 							<input type="radio" name="debt-amount" id="1" class="number-of-questions" value="2" required>
 							<label for="1" data-debt-amount="2"></label>
@@ -77,8 +77,9 @@
 						</div>
 				</section>
 				
-				<section class="tags-input-frame input-frame">				
-					<input name="tag-input" id="tags-input" placeholder="Search free-text (optional)" value="">
+				<section class="tags-input-frame input-frame">		
+					<h4><b>Prefered tags that questions will include</b></h4>		
+					<input name="tag-input" id="tags-input" placeholder="Optional" value="">
 					<p>Press 'Enter' to add tags</p>
 					<div class="tags-box"></div>
 					<p id="paragraph-error"></p>
@@ -96,6 +97,7 @@
 				<fieldset class="quiz-content">
 					<legend>
 						<span id="difficulty-span"></span>
+						<span>correct</span>
 						<span id="correct-score"></span>
 						<span> of </span> 
 						<span id="total-question"></span>
