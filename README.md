@@ -4,8 +4,28 @@
 
 ![App screenshot](https://i.imgur.com/mAGkpAt.png)
 
-I developed this app with TypeScript, Sass, AJAX and it's bundle with Parcel. 
-The questions is fetched via The Trivia API, link futher down this file.
+## How to use
+- Choose your category/categories. 
+- Three diffrent difficulties.
+- How many questions per run.
+- Free choice of preferd tags.
+- Press "let's go"
+
+You will now start the quiz with your preferences!
+Finish the task and commit to scoreboard to compete with your friends.
+
+You can anytime restart the quiz and also go to scoreboard section.
+Have fun! :)
+
+## My Journey
+
+I developed this app with:
+- TypeScript
+- Sass
+- AJAX 
+- Parcel build-tool
+
+The questions is fetched via The Trivia API. https://the-trivia-api.com/
 
 This app was a real challange for me as a frontend-student. It took me about two weeks to accomplish.
 Some parts I got stuck on was the code structure. How shall I write the code to make it solid and not to much DRY.
@@ -21,6 +41,7 @@ git clone https://github.com/Phillipe-Jarnefors/Ultimate-Quiz.git
 
 2) Enter repo directory.
 
+
 3) Install dev dependencies:
 ```
 npm install
@@ -32,16 +53,3 @@ npm run dev
 ```
 
 5) Run local-server http://localhost:1234/ in browser.
-
-## How to use
-- Choose your category/categories. 
-- Three diffrent difficulties.
-- How many questions per run.
-- Free choice of preferd tags.
-- Press "let's go"
-
-You will now start the quiz with your preferences!
-Finish the task and commit to scoreboard to compete with your friends.
-
-You can anytime restart the quiz and also go to scoreboard section.
-Have fun! :)
