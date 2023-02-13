@@ -33,9 +33,9 @@ quizContent.style.display = 'none'
 scoreArticle.style.display = 'none'
 
 let expandDropdownCategory: boolean = false;
-let quizUrl = 'https://the-trivia-api.com/api/categories'
-let tagsUrl = 'https://the-trivia-api.com/api/tags'
-let requestUrl = 'https://the-trivia-api.com/api/questions?categories='
+let quizUrl: string = 'https://the-trivia-api.com/api/categories'
+let tagsUrl: string = 'https://the-trivia-api.com/api/tags'
+let requestUrl: string = 'https://the-trivia-api.com/api/questions?categories='
 let categoryUrl: string = ""
 let valueArray: string[] = []
 let diffUrl: string = ""
@@ -50,20 +50,20 @@ interface Userstorage {
 	difficulty: string,
 	score: number
 }
+let storedUsers: Userstorage[] = []
 let userData: Userstorage = {
 	nickname: "",
 	difficulty: "",
 	score: 0
 }
-let storedUsers: Userstorage[] = []
-let correctAnswer: 
-{ 	
+
+interface CorrectAwnser {
 	answer: string, 
 	correctScore: number, 
 	askedCount: number, 
 	totalQuestion: number,	
-} 
-= {
+}
+let correctAnswer: CorrectAwnser = {
 	answer: "",
 	correctScore: 0,
 	askedCount: 0,
@@ -76,7 +76,7 @@ const imageSrc =
 }
 
 let quizApp = {
-	showCheckboxes() {
+	showCheckboxes(): void {
 		if(!expandDropdownCategory) {
 			categoryCheckbox.style.display = 'block'		
 			expandDropdownCategory = true;
@@ -85,7 +85,7 @@ let quizApp = {
 			expandDropdownCategory = false;
 		}
 	},
-	setupContent() {
+	setupContent() : void {
      	difficultyButtons[0].checked = true;
 		diffUrl = '&difficulty=easy'
 		difficultySpan.innerHTML = 'EASY'		
@@ -93,7 +93,7 @@ let quizApp = {
 		questionsQuantityUrl = '&limit=2'
 		correctAnswer.totalQuestion = 2
 	},
-	printCategories(data: { [key:string]: string[] }) {
+	printCategories(data: { [key:string]: string[] }): void {
 		let checkboxValues: string[] = Object.values(data).map((values) => values[0])	
 		categoryCheckbox.innerHTML = Object.keys(data)
 		.map(key => `
@@ -103,7 +103,7 @@ let quizApp = {
 		`).join('');		
 		this.testCheckCategories(checkboxValues)		
 	},
-	testCheckCategories(checkboxValues: string[]) {
+	testCheckCategories(checkboxValues: string[]): void {
 		const categoryCheckboxValue = document.querySelectorAll('.category-value') as NodeListOf<HTMLInputElement>	
 		categoryCheckboxValue.forEach((checkbox, index) => {
 			checkboxValues.forEach((box, i) => {
@@ -126,12 +126,12 @@ let quizApp = {
 			})
 		})
 	},
-	selectDifficulty() {
+	selectDifficulty(): void {
 		for(const difficultyRadioButton of difficultyButtons) {
 			difficultyRadioButton.addEventListener('change', this.selectedDifficult)
 		}
 	},
-	selectedDifficult(e: Event) {
+	selectedDifficult(e: Event): void {
 		const target = e.target as HTMLInputElement;	
 		if (target.checked) {	
 			diffUrl = '&difficulty=' + target.value
@@ -140,7 +140,7 @@ let quizApp = {
 			console.log(diffUrl)	
 		} 
 	},
-	numOfQuestions() {
+	numOfQuestions(): void {
 		for (const questions of numOfQuestionsBtns) {
 			questions.addEventListener('change', (e) => {
 				const target = e.target as HTMLInputElement;
@@ -153,7 +153,7 @@ let quizApp = {
 			})
 		}
 	},
-	tagsHandler(data: any) {		
+	tagsHandler(data: string[]): void {		
 		const inputValueTag = tagsInputField.value
 		const outputElement = `<div class="tags-div"><h1 class="tags">${inputValueTag}</h1></div>`
 		const foundTag = data.find((tag:string) => tag === tagsInputField.value);
@@ -176,7 +176,7 @@ let quizApp = {
 			paragraphError.innerHTML = `<img src="${imageSrc.warning}">Tag not found.`   	
         }	
 	},	
-	storeUrl() {
+	storeUrl(): void {
 		if(tagsArray.length > 0) {
 			stringOfArray = tagsArray.toString()
 			tagsString = '&tags=' + stringOfArray
@@ -186,7 +186,7 @@ let quizApp = {
 		requestCallApi(requestUrl)
 	},
 	// Second part of the Quiz
-	showQuestion(data: any) {
+	showQuestion(data: any): void {
 		checkBtn.disabled = false;
 		checkBtn.style.display = "block"
 		mainContentStart.style.display = "none"
@@ -204,7 +204,7 @@ let quizApp = {
 		`;
 		this.selectOption()
 	},
-	selectOption() {
+	selectOption(): void {
 		questionUnorderlist.querySelectorAll('li').forEach((option) => {
 			option.addEventListener('click', () => {
 				if(questionUnorderlist.querySelector('.selected')) {
@@ -215,7 +215,7 @@ let quizApp = {
 			})
 		})
 	},
-	checkAnswer() {
+	checkAnswer(): void {
 		checkBtn.disabled = true
 		checkBtn.style.display = "none"
 		if(questionUnorderlist.querySelector('.selected')) {
@@ -241,7 +241,7 @@ let quizApp = {
 			checkBtn.style.display = "block"
 		}
 	},
-	checkCount() {
+	checkCount(): void {
 		correctAnswer.askedCount++
 		this.setCount();
 		if(correctAnswer.askedCount === correctAnswer.totalQuestion) {
@@ -254,12 +254,12 @@ let quizApp = {
 			}, 2500)
 		}
 	},
-	setCount() {
+	setCount(): void {
 		totalQuestion.innerHTML = correctAnswer.totalQuestion.toString()
 		correctScoreSpan.innerHTML = correctAnswer.correctScore.toString()
 	},
 	// Commit score section
-	storeUserData() {		
+	storeUserData(): void {		
 		if(nicknameInput.value.length < 3) {
 			alert('Your nickname is too short.')
 		} else {
@@ -268,7 +268,7 @@ let quizApp = {
 			this.printScoreboard()
 		}
 	},
-	printScoreboard() {
+	printScoreboard(): void {
 		scoreboardArticle.style.display = "block"
 		scoreArticle.style.display = 'none'
 		scoreboardSection.innerHTML = ""	
@@ -283,7 +283,7 @@ let quizApp = {
 		//clg for dev
 		//console.log(storedUsers)
 	},
-	resetQuiz() {
+	resetQuiz(): void {
 		scoreArticle.style.display = 'none'
 		scoreboardArticle.style.display = 'none'
 		quizContent.style.display = 'none'
