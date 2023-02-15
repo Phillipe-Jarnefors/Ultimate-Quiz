@@ -98,7 +98,7 @@ let quizApp = {
 		categoryCheckbox.innerHTML = Object.keys(data)
 		.map(key => `
 			<label>
-				<input type="checkbox" class="category-value" value=""/>${key}
+				<input type="checkbox" class="category-value" value=""/>  ${key}
 			</label>
 		`).join('');		
 		this.testCheckCategories(checkboxValues)		
@@ -251,7 +251,7 @@ let quizApp = {
 		} else {
 			setTimeout(() => {
 				requestCallApi(requestUrl)
-			}, 2500)
+			}, 2200)
 		}
 	},
 	setCount(): void {
