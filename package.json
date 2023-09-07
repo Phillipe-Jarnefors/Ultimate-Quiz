@@ -4,7 +4,8 @@
   "description": "A fun quiz game!",
   "source": "src/index.html",
   "scripts": {
-    "dev": "parcel"
+    "dev": "parcel",
+    "build": "parcel build"
   },
   "repository": {
     "type": "git",
