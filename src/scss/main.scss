@@ -5,6 +5,11 @@
 	margin: 0;
 }
 
+a {
+	color: inherit; 
+	text-decoration: inherit; 
+}
+
 .standard-button {
 	background: $first-color;
 	@include standard-button;
@@ -19,11 +24,24 @@
 
 header {
 	@include flex;
-	@include font-head;	
+	justify-content: space-around;	
 	font-family: $font-head;
 	color: $fourth-color;
 	background: $first-color;
 	height: 5rem;
+
+	h1 {
+		@include font-head;
+		font-size: larger;
+	}
+
+	h2 {
+		font-family: $font-main;
+	}
+
+	h2 > a {
+		font-family: $font-main;
+	}
 }
 
 .wrapper {
@@ -40,10 +58,17 @@ header {
 
 @media screen and (min-width: 650px){
 	header {
-		justify-content: flex-start;
-		padding-left: 2rem;
+		justify-content: center;
+		padding: 2rem;
+		gap: 3rem;
 		height: 2.5rem;
 		font-size: small;
+		h1 {
+			font-size: 1.5rem;
+		}
+		h2 {
+			font-size: 2rem;
+		}
 	}
 
 	.wrapper {
@@ -666,9 +691,17 @@ form {
 //----------------------------- Footer -----------------------------
 footer {
 	@include flex;
-	position: fixed;
+	flex-direction: row;
 	background: $third-color;
 	bottom: 0;
 	min-width: 300px;
 	width: $max-width;
+
+}
+
+.score-newquiz-buttons {
+	button {
+		margin: 0;
+		padding: 0.5rem 1rem;
+	}
 }
